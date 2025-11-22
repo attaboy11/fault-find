@@ -21,4 +21,5 @@ Open <http://localhost:3000> in your browser.
 
 - Backend: Node.js built-in `http` server (no external packages) serving JSON APIs and static assets.
 - Data: In-memory seed data in `data/store.js` (models, subsystems, symptoms, components, flows, safety notes, jobs) and an optional external library at `data/fault_library.json` that is normalized into flows at startup.
+- Data: In-memory seed data in `data/store.js` (models, subsystems, symptoms, components, flows, safety notes, jobs).
 - Frontend: Single-page HTML/CSS/JS in `public/` with simple panel navigation.
