@@ -1,27 +1,24 @@
 # BMU Fault Finder
 
-BMU Fault Finder is a small web app to help façade-access / BMU engineers
-diagnose faults, look up parts, and log jobs while on site.
+BMU Fault Finder is a tiny BMU diagnostic helper for façade-access engineers. Pick a model, subsystem, and symptom, then run the analysis to see likely causes, checks, and safety notes. The app also includes quick parts lookup and a simple job log.
 
-## Features
-
-- **New Fault**: Pick BMU model + subsystem + symptom, add free-text notes,
-  click **Run fault analysis**, and see:
-  - Likely causes
-  - Checks (as a tickable checklist)
-  - Safety notes
-  - Raw JSON (for debugging and future AI integration)
-- **Parts search**: Filter components by model, subsystem, and search term.
-- **Jobs**: Simple job log with site, model, reported fault, diagnosis, notes.
-
-## Tech
-
-- Backend: Node.js built-in `http` server (`server.js`), no external deps.
-- Data: In-memory store (`data/store.js`).
-- Frontend: Single-page HTML/CSS/JS from `public/`.
-
-## Running locally
+## Getting started
 
 ```bash
-npm install       # no deps, but keeps the workflow standard
-npm run dev       # starts HTTP server on http://localhost:3000
+npm install       # no external deps, keeps workflow consistent
+npm run dev       # starts the server on http://localhost:3000
+```
+
+Open <http://localhost:3000> in your browser.
+
+## What you get
+
+- **New Fault**: Select model + subsystem + symptom, press **Run fault analysis**, and view likely causes, checks, safety guidance, and raw JSON for the matched fault flows.
+- **Search Parts**: Filter components by model, subsystem, and text search over name/part/location.
+- **Jobs**: Log jobs (site, model, reported, diagnosis, notes) and copy summaries for reports.
+
+## Tech notes
+
+- Backend: Node.js built-in `http` server (no external packages) serving JSON APIs and static assets.
+- Data: In-memory seed data in `data/store.js` (models, subsystems, symptoms, components, flows, safety notes, jobs).
+- Frontend: Single-page HTML/CSS/JS in `public/` with simple panel navigation.
