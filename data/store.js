@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const store = {
   models: [
     { id: 'm1', name: 'Alimak Horizon A1', manufacturer: 'Alimak', site: 'Downtown Tower' },
@@ -106,5 +109,90 @@ const store = {
   ],
   jobs: []
 };
+
+function readFaultLibrary() {
+  const libraryPath = path.join(__dirname, 'fault_library.json');
+  if (!fs.existsSync(libraryPath)) return [];
+  try {
+    const raw = fs.readFileSync(libraryPath, 'utf8');
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Failed to load external fault library', err);
+    return [];
+  }
+}
+
+function ensureModelId(name, manufacturer = 'Unknown', site = '') {
+  const existing = store.models.find((m) => m.name.toLowerCase() === name.toLowerCase());
+  if (existing) return existing.id;
+  const id = `lib-m-${store.models.length + 1}`;
+  store.models.push({ id, name, manufacturer, site });
+  return id;
+}
+
+function ensureSubsystemId(name) {
+  const existing = store.subsystems.find((s) => s.name.toLowerCase() === name.toLowerCase());
+  if (existing) return existing.id;
+  const id = `lib-s-${store.subsystems.length + 1}`;
+  store.subsystems.push({ id, name });
+  return id;
+}
+
+function ensureSymptomId(subsystemId, title) {
+  const existing = store.symptoms.find(
+    (s) => s.subsystemId === subsystemId && s.title.toLowerCase() === title.toLowerCase()
+  );
+  if (existing) return existing.id;
+  const id = `lib-sym-${store.symptoms.length + 1}`;
+  store.symptoms.push({ id, subsystemId, title });
+  return id;
+}
+
+function ensureSafetyIds(safetyTexts = []) {
+  return safetyTexts.map((text) => {
+    const existing = store.safetyNotes.find((note) => note.text.toLowerCase() === text.toLowerCase());
+    if (existing) return existing.id;
+    const id = `lib-sn-${store.safetyNotes.length + 1}`;
+    store.safetyNotes.push({ id, text });
+    return id;
+  });
+}
+
+function normalizeFaultLibrary() {
+  const library = readFaultLibrary();
+  if (!library.length) return;
+
+  library.forEach((entry, idx) => {
+    const modelId = ensureModelId(entry.model_or_range || 'Generic BMU', entry.manufacturer || 'Unknown');
+    const subsystemId = ensureSubsystemId(entry.subsystem || 'General');
+    const symptomId = ensureSymptomId(subsystemId, entry.symptom_title || `Library symptom ${idx + 1}`);
+    const safety = ensureSafetyIds(entry.safety_hazards_and_warnings || []);
+
+    const causes = (entry.typical_root_causes || []).map((component, index, arr) => {
+      const probability = arr.length ? Number((1 / arr.length).toFixed(2)) : undefined;
+      return { component, probability };
+    });
+
+    const checks = [
+      ...(entry.diagnostic_checks_step_by_step || []).map((text) => ({ text, detail: '' })),
+      ...(entry.recommended_corrective_actions || []).map((text) => ({ text: `Recommended: ${text}`, detail: '' }))
+    ];
+
+    const flowId = `lib-f-${store.flows.length + 1}`;
+    const modelIds = Array.from(new Set([modelId, ...store.models.map((m) => m.id)]));
+
+    store.flows.push({
+      id: flowId,
+      modelIds,
+      subsystemId,
+      symptomId,
+      likelyCauses: causes,
+      checks,
+      safety
+    });
+  });
+}
+
+normalizeFaultLibrary();
 
 module.exports = { store };

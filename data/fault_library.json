@@ -1,0 +1,170 @@
+[
+  {
+    "manufacturer": "generic-BMU",
+    "model_or_range": "Various roof-mounted BMUs",
+    "subsystem": "Power supply",
+    "symptom_title": "BMU completely unresponsive (no power)",
+    "symptom_details": [
+      "All functions and indicator lights are off, even when the main switch is on.",
+      "No movement or sound from motors when attempting any operation."
+    ],
+    "typical_root_causes": [
+      "Main power supply is off or not reaching the BMU (e.g. building isolator off, blown fuse, or tripped circuit breaker).",
+      "Emergency stop circuit engaged (any E-stop pressed will cut power to controls).",
+      "Phase failure or phase mismatch – one or more supply phases lost or wrong sequence, triggering phase protection relay."
+    ],
+    "diagnostic_checks_step_by_step": [
+      "1) Isolate and secure the BMU per site safety procedure before troubleshooting electrical issues.",
+      "2) Verify the building power supply: confirm the main isolator or breaker for the BMU is on and that supply voltage (all phases) is present.",
+      "3) Check for any tripped Residual Current Device (RCD) or leakage breaker in the BMU’s electrical panel and reset if safe to do so.",
+      "4) Inspect all emergency stop buttons (on the cradle, roof car, and any remote controls) – reset any that are engaged, as an active E-stop will prevent power up.",
+      "5) If the BMU has a phase monitoring relay, ensure it indicates correct phase/voltage; if a phase error is indicated, have an electrician check the building supply phase sequence and voltage.",
+      "6) After restoring power, test a small movement. If still dead, stop and check incoming cables and fuses for continuity – a blown fuse or loose connection in the supply could be present.",
+      "7) If power is present but the control system still is unresponsive, the main control relay or PLC safety circuit may be open – consult manufacturer wiring diagrams or support."
+    ],
+    "safety_hazards_and_warnings": [
+      "Always de-energize and lockout the BMU power supply before opening electrical panels to check fuses or wiring. High voltage exposure can be fatal.",
+      "Restoring power unexpectedly can cause sudden movement – ensure the BMU is parked and clear of personnel before re-energizing.",
+      "If an E-stop cannot be reset or power keeps tripping, do not bypass it. This could indicate a serious electrical fault or safety condition – escalate to a qualified electrical engineer."
+    ],
+    "recommended_corrective_actions": [
+      "Restore power supply: close any open isolator or replace/reset faulty breakers or fuses once the underlying cause is fixed.",
+      "Reset any triggered safety devices (e.g. turn and release emergency stops). If a phase monitor relay was tripped due to supply issues, correct the phase supply then reset the relay.",
+      "If power returns but control circuits remain inactive, inspect control relays and contactors – a defective main contactor coil or safety relay might need replacement. Consult manufacturer guidance for troubleshooting control circuitry."
+    ],
+    "parts_commonly_involved": [
+      "Main power isolator switch",
+      "Supply fuses or circuit breakers",
+      "RCD/leakage protector",
+      "Emergency stop switches and safety relay",
+      "Phase monitoring relay (phase sequence protector)"
+    ],
+    "manufacturer_references": [
+      "See BMU O&M manual troubleshooting section for 'No Power': often listed as first checks (power supply, isolator, E-stop).",
+      "CoxGomyl example – manual EWC-4870 (Kookaburra BMU) lists leakage breaker and phase loss as causes for \"BMU not working\"."
+    ],
+    "source_urls": [
+      "https://www.scribd.com/document/587469331/EWC-4870-OMM-0001-Rev-00",
+      "https://www.powerclimber.com/wp-content/uploads/38888-E-User-Manual-Kliper-V2_RevB.pdf"
+    ],
+    "region_or_market_if_relevant": "global",
+    "confidence": "high",
+    "notes_for_fault_finder_app": [
+      "Symptom phrasing: 'No power to BMU – completely dead (no lights or movement)'.",
+      "This should be one of the first options since loss of power is common and straightforward to check."
+    ]
+  },
+  {
+    "manufacturer": "generic-BMU",
+    "model_or_range": "Suspended platform hoist systems (traction or drum)",
+    "subsystem": "Hoist drive / Limit circuits",
+    "symptom_title": "Hoist will not raise (up movement blocked, down is fine)",
+    "symptom_details": [
+      "The cradle/machine can lower downwards, but upward hoisting movement is not functioning.",
+      "Operators may notice an overload indicator lit, or a top limit alarm, and the hoist will only allow lowering."
+    ],
+    "typical_root_causes": [
+      "Normal top limit switch activated – the cradle likely hit its upper travel limit, stopping upward motion.",
+      "Overload safety tripped – the load in the cradle exceeded the allowed limit, triggering a cut-out that prevents lifting (up direction).",
+      "Final (ultimate) upper limit engaged – in cases where the primary limit failed and an ultimate limit activated, the hoist may be electrically cut off in both directions until reset."
+    ],
+    "diagnostic_checks_step_by_step": [
+      "1) Ensure the cradle is not already at the top stop: visually confirm clearance from any upper stop or striker. If at top, attempt to lower slightly to disengage the limit.",
+      "2) Check the upper limit switch and ultimate limit switch status (if visible on HMI or indicator lights). Reset any limit that has tripped: many BMUs allow downward movement to clear a top limit condition.",
+      "3) Observe any overload indicator on the control panel. If an overload is indicated or suspected (alarm or light on), remove any excess weight from the cradle and see if the up function is restored.",
+      "4) If neither limit nor overload seems to be the cause (no indicators), inspect the hoist drive electrical circuit: the up-contactor or up relay could be faulty. Listen for clicks or check if the “up” contactor energizes when up is requested.",
+      "5) Inspect any mechanical interlocks that might prevent upward movement (for example, some BMUs have a jib angle or parking lock that must be disengaged to allow hoisting). Verify the machine is properly set up for normal operation (fully un-parked, etc.).",
+      "6) If an ultimate upper limit (final limit) has tripped (which usually cuts all motion as a safety), it may require a manual reset or a key to override. Follow the manufacturer procedure to safely reset the ultimate limit – usually this involves accessing a key switch or manually re-leveling the cradle off the limit.",
+      "7) After addressing the above, test the hoist up function with no load or minimal load. Restore normal operation gradually and monitor any alarms."
+    ],
+    "safety_hazards_and_warnings": [
+      "Do NOT attempt to force the hoist upward if a top limit or overload is engaged – this could damage safety devices or structural elements. Always relieve the condition (lower down or unload weight) first.",
+      "Working at heights: ensure the cradle is stable and not at risk of sudden movement when freeing limits. If at an upper limit, clear personnel from beneath and lower slowly once reset.",
+      "If an overload was triggered with a heavy load, removing the load could cause a sudden balance shift. Handle materials carefully to avoid a sudden ascent of an under-weighted platform."
+    ],
+    "recommended_corrective_actions": [
+      "If top limit was reached: Lower the cradle slightly to disengage the limit switch, then adjust or calibrate the limit if it triggered early. Ensure the striker and limit switch are properly aligned and secure.",
+      "If overload was the issue: Remove excess weight and then perform an overload device reset if required. Many systems auto-reset when weight is reduced below the threshold, but some may need a manual reset or power cycle.",
+      "For a tripped ultimate upper limit: follow the specific reset procedure (often a physical reset at the limit switch or a key-operated override). After reset, test the upper travel at low speed and inspect the primary limit switch that failed to stop in time – it may need replacement or adjustment.",
+      "If the up function still fails after these measures, inspect electrical components (up directional contactor, limit switch wiring, overload sensor wiring) and replace faulty parts as needed. Always verify proper function of all limit switches before returning the BMU to service."
+    ],
+    "parts_commonly_involved": [
+      "Upper travel limit switch (primary limit)",
+      "Ultimate upper limit switch (final safety limit)",
+      "Hoist overload sensor or load cell",
+      "Up direction contactor or relay",
+      "Control panel overload indicator light or alarm"
+    ],
+    "manufacturer_references": [
+      "EN 1808 standard requires overload cut-out to prevent raising when overloaded.",
+      "CoxGomyl manual example: \"Cradle will not raise\" due to full up limit tripped or overload, with recommendation to remove excess weight."
+    ],
+    "source_urls": [
+      "https://www.scribd.com/document/587469331/EWC-4870-OMM-0001-Rev-00",
+      "https://www.powerclimber.com/wp-content/uploads/38888-E-User-Manual-Kliper-V2_RevB.pdf",
+      "https://osha.gov/laws-regs/standardinterpretations/1996-02-23"
+    ],
+    "region_or_market_if_relevant": "global (EN/OSHA standards)",
+    "confidence": "high",
+    "notes_for_fault_finder_app": [
+      "Group any symptoms like \"Cannot hoist up / only down works\" under this pattern.",
+      "Include hints if overload light is on or top limit alarm, as sub-selection (since both result in similar symptom of no-up)."
+    ]
+  },
+  {
+    "manufacturer": "generic-BMU",
+    "model_or_range": "Suspended platform hoist systems",
+    "subsystem": "Hoist drive / Safety limit circuits",
+    "symptom_title": "Hoist will not lower (downward movement blocked)",
+    "symptom_details": [
+      "The hoist can raise the cradle, but will not allow lowering. Downward movement is completely stopped, while upward movement still functions normally.",
+      "Operators might observe a bottom safety bar alarm or slack rope indicator when this occurs."
+    ],
+    "typical_root_causes": [
+      "Bottom travel limit or final lower limit activated – the platform may have hit a lower stop or ground, triggering a limit switch (often a bottom safety trip bar) that halts downward motion.",
+      "Slack rope safety device engaged – if the hoist rope went slack (for example, cradle caught on a projection or one hoist side stopping), the anti-tilt/slack rope device will stop downward travel to prevent a free-fall condition.",
+      "Mechanical obstruction under the cradle – the platform might be resting on an obstacle or the ground, causing the system to sense overload or trigger the bottom bar."
+    ],
+    "diagnostic_checks_step_by_step": [
+      "1) First, raise the cradle slightly (a few inches/cm up) and see if the down function becomes available again. This often resets a bottom limit trip bar by clearing the obstruction.",
+      "2) Inspect the underside of the cradle for any objects or building features triggering the lower anti-collision bar (bottom bumper). If the bar is depressed, the down circuit is opened. Clear any obstructions and ensure the bar moves freely.",
+      "3) Check if any slack rope or tilt indicator is active: if one side of the platform is lower, or the ropes appear slack, an anti-tilt (slack rope) safety may have engaged. In that case, carefully raise the platform on the affected side (or all the way up a bit) until the platform is level and ropes retensioned.",
+      "4) Verify that the emergency stop is not pressed – though an E-stop usually cuts all motions, ensure no partial condition is preventing down. (If up works, E-stop is likely fine, but double-check any safety relays reset properly.)",
+      "5) If the BMU uses a dual-hoist system, observe both hoists: one hoist stopping due to overload or fault while the other still moves can trigger a tilt. Manual intervention to re-level may be required if automated leveling failed.",
+      "6) Once any slack rope or bottom limit conditions are cleared and the cradle is slightly raised off the obstruction, attempt to lower again under controlled, slow speed. Ensure someone observes the platform clearance.",
+      "7) If the problem persists with no obvious cause, inspect the down control circuit (down contactor/relay and associated limit switch wiring). A failed down contactor or a stuck limit switch could be falsely detecting a bottom limit. Replace or adjust components as needed."
+    ],
+    "safety_hazards_and_warnings": [
+      "Do not override or bypass the bottom limit or slack rope safety – lowering against an engaged safety can cause the platform to crush objects or go slack on ropes, risking a fall or tipping of the cradle.",
+      "If a slack rope device activated, the platform may be tilted and unstable. Workers should secure themselves and not attempt to move suddenly. Correct the tilt by raising carefully – never allow personnel to stay on a badly tilted cradle during adjustments.",
+      "Ensure no one is beneath the cradle when troubleshooting a no-down situation. The platform could suddenly descend once the safety is cleared."
+    ],
+    "recommended_corrective_actions": [
+      "If the bottom safety bar was triggered: Clear any obstruction under the cradle, then manually reset the bottom limit if required (some have a reset button or simply raising the cradle resets it). Verify the bar switch functionality – adjust or repair if it triggers too easily or sticks.",
+      "If slack rope was the cause: Identify why slack occurred (e.g., one hoist stalled or cradle snagged). After re-leveling the platform, test the slack rope safety device for proper operation. Calibrate or service the anti-tilt system if it’s overly sensitive or not resetting automatically.",
+      "In case of a persistent down circuit fault with no actual obstruction: inspect the limit switch wiring and down control relays. Replace a faulty bottom limit switch or repair wiring if it was falsely sensing. Confirm the down contactor energizes when commanded; if not, it may need replacement.",
+      "After any fix, perform a controlled test: lower the cradle to near its normal bottom position while observing the limit switches. Ensure the primary lower limit stops the cradle at the correct height and that the final limit only trips in an over-travel scenario."
+    ],
+    "parts_commonly_involved": [
+      "Lower limit switch / bottom safety trip bar assembly",
+      "Slack rope (anti-tilt) switch or device",
+      "Down direction contactor or hydraulic valve (for lowering)",
+      "Hoist overload/tilt sensor (if one hoist overloaded causing tilt)",
+      "Limit switch wiring and junctions at cradle"
+    ],
+    "manufacturer_references": [
+      "CoxGomyl manual example: \"Cradle will not lower\" due to trip bar triggered or slack rope – instructs raising cradle until ropes taut before lowering.",
+      "Power Climber manual: bottom limit trip bar activation stops down movement while still allowing up."
+    ],
+    "source_urls": [
+      "https://www.scribd.com/document/587469331/EWC-4870-OMM-0001-Rev-00",
+      "https://www.powerclimber.com/wp-content/uploads/38888-E-User-Manual-Kliper-V2_RevB.pdf"
+    ],
+    "region_or_market_if_relevant": "global",
+    "confidence": "high",
+    "notes_for_fault_finder_app": [
+      "Symptom phrasing: 'Cannot lower down (hoist up works, down does not)'.",
+      "This pattern covers bottom limit and slack-rope triggers. The app might guide user to check for bottom obstructions vs slack rope scenario."
+    ]
+  }
+]
