@@ -1,0 +1,11 @@
+{
+  "name": "bmu-fault-finder",
+  "version": "1.0.0",
+  "description": "Minimal BMU diagnostic app",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMU Fault Finder</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <header>
+    <h1>BMU Fault Finder</h1>
+    <nav>
+      <button class="nav-btn active" data-panel="fault">New Fault</button>
+      <button class="nav-btn" data-panel="parts">Search Parts</button>
+      <button class="nav-btn" data-panel="jobs">Jobs</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="panel-fault" class="panel">
+      <div class="form-grid">
+        <label>Model
+          <select id="modelSelect"></select>
+        </label>
+        <label>Subsystem
+          <select id="subsystemSelect"></select>
+        </label>
+        <label>Symptom
+          <select id="symptomSelect"></select>
+        </label>
+        <label>Notes
+          <textarea id="notesInput" rows="3" placeholder="Extra context, site notes, or observed behavior"></textarea>
+        </label>
+      </div>
+      <button id="run-fault">Run fault analysis</button>
+      <div id="fault-results" class="results hidden"></div>
+    </section>
+
+    <section id="panel-parts" class="panel hidden">
+      <div class="filters">
+        <select id="partsModel"></select>
+        <select id="partsSubsystem"></select>
+        <input id="partsSearch" type="search" placeholder="Search parts, P/N, location">
+      </div>
+      <div id="partsList" class="card-grid"></div>
+    </section>
+
+    <section id="panel-jobs" class="panel hidden">
+      <div class="form-grid">
+        <label>Site
+          <input id="jobSite" type="text" placeholder="Tower A, zone, etc.">
+        </label>
+        <label>Model
+          <select id="jobModel"></select>
+        </label>
+        <label>Reported issue
+          <input id="jobReported" type="text" placeholder="What was reported">
+        </label>
+        <label>Diagnosis
+          <input id="jobDiagnosis" type="text" placeholder="What you found">
+        </label>
+        <label>Notes
+          <textarea id="jobNotes" rows="3" placeholder="Work done, parts swapped, follow-up"></textarea>
+        </label>
+      </div>
+      <button id="saveJob">Save job</button>
+      <div id="jobsList" class="card-grid"></div>
+    </section>
+  </main>
+
+  <script src="/public/app.js"></script>
+</body>
+</html>
